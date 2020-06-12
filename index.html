@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Input celeb name to see Gifs!</h2>
+    <input id="personInput" />
+    <button>Click</button>
+    <div id="gifs-appear-here">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+
+    $("button").on("click", function(){
+        var person = $("#personInput").val()
+        console.log(person)
+
+        var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        person + "&api_key=dc6zaTOxFJmzC&limit=10";
+       
+        $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
+        .then(function(response) {
+        var results = response.data;
+        console.log(results)
+        for(var i = 0; i < results.length; i++){
+        var gifDiv = $("<div>");
+        var rating = results[i].rating;
+        var p = $("<p>").text("Rating: " + rating);
+        var personImage = $("<img>");
+        personImage.attr("src", results[i].images.fixed_height.url);
+        gifDiv.append(p);
+        gifDiv.append(personImage);
+        $("#gifs-appear-here").prepend(gifDiv);
+        }}
+        
+        );
+    })
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
